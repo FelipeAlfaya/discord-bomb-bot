@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id             String   @id @default(cuid())
+  discordId      String?  @unique
+  name           String
+  guild          String
+  nationality    String
+  sector         String?
+  playstyle      String
+  alignment      String?
+  flexibility    Int
+  speed          Int
+  aim            Int
+  acc            Int
+  adp            Int
+  ps             Int
+  overall        Int
+  keywords       String[]
+  duelsAsPlayer1 Duel[]   @relation("Player1Duels")
+  duelsAsPlayer2 Duel[]   @relation("Player2Duels")
+}
+
+model Duel {
+  id           String  @id @default(cuid())
+  messageId    String? @unique
+  participant1 String // ID do jogador 1
+  participant2 String // ID do jogador 2
+  rounds       String
+  score        String
+  winner       String // ID do vencedor
+  player1      Player  @relation("Player1Duels", fields: [participant1], references: [id])
+  player2      Player  @relation("Player2Duels", fields: [participant2], references: [id])
+}
