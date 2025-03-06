@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js'
 import prisma from '../prisma.js'
+import { pendingDuels } from '../events/messageReactionAdd.js'
 
 export const data = new SlashCommandBuilder()
   .setName('post-duel')
@@ -84,16 +85,17 @@ export async function execute(interaction) {
     const winner =
       winnerChoice === 'participant1' ? participant1.id : participant2.id
 
-    const duel = await prisma.duel.create({
-      data: {
-        participant1: participant1.id,
-        participant2: participant2.id,
-        score,
-        rounds,
-        winner,
-        messageId: interaction.id,
-      },
-    })
+    const pendingDuel = {
+      participant1: participant1.id,
+      participant2: participant2.id,
+      score,
+      rounds,
+      winner,
+      season: process.env.SEASON,
+      messageId: interaction.id,
+    }
+
+    pendingDuels.set(interaction.id, pendingDuel)
 
     const approvalChannel = interaction.client.channels.cache.get(
       process.env.APPROVAL_CHANNEL_ID
@@ -114,7 +116,7 @@ export async function execute(interaction) {
           ? participant1Option.id
           : participant2Option.id
       }>\n` +
-      `Duel ID: ${duel.id}\n` +
+      `Duel ID: ${interaction.id}\n` +
       `React with ✅ to approve.`
 
     const approvalMessage = await approvalChannel.send(duelMessage)

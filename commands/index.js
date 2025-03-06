@@ -12,6 +12,30 @@ import {
   execute as managePlayerExecute,
 } from './managePlayer.js'
 import { data as profileData, execute as profileExecute } from './profile.js'
+import { data as rankData, execute as rankExecute } from './rank.js'
+import {
+  data as setSeasonData,
+  execute as setSeasonExecute,
+} from './setSeason.js'
+import {
+  data as resetSeasonData,
+  execute as resetSeasonExecute,
+} from './resetSeason.js'
+
+export const setSeason = {
+  data: setSeasonData,
+  execute: setSeasonExecute,
+}
+
+export const resetSeason = {
+  data: resetSeasonData,
+  execute: resetSeasonExecute,
+}
+
+export const rank = {
+  data: rankData,
+  execute: rankExecute,
+}
 
 export const profile = {
   data: profileData,

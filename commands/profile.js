@@ -50,6 +50,14 @@ export async function execute(interaction) {
     const totalDuels = wins + losses
     const winRate = totalDuels > 0 ? ((wins / totalDuels) * 100).toFixed(2) : 0
 
+    const totalBlocks = 10
+    const winBlocks = Math.round((wins / totalDuels) * totalBlocks)
+    const lossBlocks = totalBlocks - winBlocks
+
+    const winBar = '🟩'.repeat(winBlocks)
+    const lossBar = '🟥'.repeat(lossBlocks)
+    const winrateGraph = `${winBar}${lossBar}`
+
     const embed = new EmbedBuilder()
       .setTitle(`Profile of ${player.name}`)
       .setColor(0x0099ff)
@@ -68,9 +76,11 @@ export async function execute(interaction) {
         { name: 'ADP', value: player.adp.toString(), inline: true },
         { name: 'PS', value: player.ps.toString(), inline: true },
         { name: 'Overall', value: player.overall.toString(), inline: true },
+        { name: 'LP', value: player.lp.toString(), inline: true },
         { name: 'Win Rate', value: `${winRate}%`, inline: true },
         { name: 'Wins', value: wins.toString(), inline: true },
-        { name: 'Losses', value: losses.toString(), inline: true }
+        { name: 'Losses', value: losses.toString(), inline: true },
+        { name: 'Win/Lose', value: winrateGraph, inline: false }
       )
 
     if (player.discordId) {

@@ -26,6 +26,8 @@ model Player {
   keywords       String[]
   duelsAsPlayer1 Duel[]   @relation("Player1Duels")
   duelsAsPlayer2 Duel[]   @relation("Player2Duels")
+  mmr            Int      @default(1000) // MMR inicial
+  lp             Int      @default(0) // LP inicial
 }
 
 model Duel {
@@ -36,6 +38,13 @@ model Duel {
   rounds       String
   score        String
   winner       String // ID do vencedor
+  season       String // Temporada do duelo
   player1      Player  @relation("Player1Duels", fields: [participant1], references: [id])
   player2      Player  @relation("Player2Duels", fields: [participant2], references: [id])
+}
+
+model Season {
+  id      String  @id @default(cuid())
+  name    String  @unique // Nome da temporada (ex: "season1")
+  current Boolean @default(false) // Indica se é a temporada atual
 }

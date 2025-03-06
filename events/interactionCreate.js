@@ -4,6 +4,9 @@ import {
   registerPlayer,
   managePlayer,
   profile,
+  setSeason,
+  resetSeason,
+  rank,
 } from '../commands/index.js'
 
 export default {
@@ -24,6 +27,12 @@ export default {
       await registerPlayer.execute(interaction)
     } else if (commandName === 'manage-player') {
       await managePlayer.execute(interaction)
+    } else if (commandName === 'set-season') {
+      await setSeason.execute(interaction)
+    } else if (commandName === 'reset-season') {
+      await resetSeason.execute(interaction)
+    } else if (commandName === 'rank') {
+      await rank.execute(interaction)
     }
   },
 }

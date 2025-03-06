@@ -5,6 +5,9 @@ import {
   registerPlayer,
   managePlayer,
   profile,
+  rank,
+  setSeason,
+  resetSeason,
 } from './commands/index.js'
 import 'dotenv/config'
 
@@ -14,6 +17,9 @@ const commands = [
   registerPlayer.data,
   managePlayer.data,
   profile.data,
+  rank.data,
+  setSeason.data,
+  resetSeason.data,
 ].map((command) => command.toJSON())
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN)

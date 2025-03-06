@@ -78,7 +78,7 @@ export async function execute(interaction) {
   const keywords = interaction.options.getString('keywords') || ''
 
   try {
-    // Verifica se o jogador já está registrado
+    // verifica se o jogador ja ta registrado
     const existingPlayer = await prisma.player.findUnique({
       where: { discordId: player.id },
     })
@@ -88,7 +88,7 @@ export async function execute(interaction) {
       return
     }
 
-    // Registra o jogador
+    // registrar o jogador
     await prisma.player.create({
       data: {
         discordId: player.id,

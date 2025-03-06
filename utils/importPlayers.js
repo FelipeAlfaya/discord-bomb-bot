@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client'
-import playersData from '../players.json' assert { type: 'json' }
+import fs from 'fs'
+
+const playersData = JSON.parse(fs.readFileSync('./players.json', 'utf-8'))
 
 const prisma = new PrismaClient()
 
